@@ -5,7 +5,7 @@ window.onload = function() {
   var socket = new WebSocket(ws_path);
   var input = document.getElementById('job-name');
 
-  function onsubmit(e) {
+  function onsubmit() {
     var name = input.value;
     console.log(name);
     if (!name) {
