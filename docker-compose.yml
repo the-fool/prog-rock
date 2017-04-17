@@ -1,0 +1,17 @@
+version: '2'
+
+services:
+  redis:
+    image: redis:latest
+
+  django:
+    build:
+      context: .
+      dockerfile: ./docker/django/Dockerfile
+    depends_on:
+      - redis
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    command: /start.sh
