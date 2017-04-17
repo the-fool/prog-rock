@@ -15,3 +15,13 @@ services:
     ports:
       - "8000:8000"
     command: /start.sh
+
+  delay:
+    build:
+      context: .
+      dockerfile: ./docker/django/Dockerfile
+    depends_on:
+      - redis
+    volumes:
+      - .:/app
+    command: python manage.py rundelay
