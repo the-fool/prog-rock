@@ -4,7 +4,6 @@ from channels.sessions import channel_session
 import json
 
 
-# Connected to websocket.connect
 @channel_session
 def ws_connect(msg):
     msg.reply_channel.send({'text': json.dumps({"accept": True})})
