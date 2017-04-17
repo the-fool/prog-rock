@@ -38,8 +38,11 @@ def worker(msg):
     def delayed_send(msg):
         Channel('asgi.delay').send(msg, immediately=True)
 
-    def send_progress(reply, progress):
-        Channel(reply).send({'text': json.dumps({'progress': progress})})
+    def send_to_ws(reply_channel, content):
+        Channel(reply_channel).send({'text': json.dumps(content)})
+
+    def send_progress(reply_channel, progress):
+        send_to_ws(reply_channel, {'progress': progress})
 
     cmd = msg.content['command']
     reply = msg.content['reply_channel']
@@ -53,7 +56,7 @@ def worker(msg):
         delayed_send(new_msg)
 
     elif cmd == 'continue':
-        # do the work
+        # check in on the background task
         progress = msg.content['progress'] + 3
         if progress >= 100:
             progress = 100
@@ -67,5 +70,4 @@ def worker(msg):
         delayed_send(new_msg)
 
     elif cmd == 'complete':
-        Channel(reply).send({'text': json.dumps({'complete': True})})
-
+        send_to_ws(reply, {'complete': True})
