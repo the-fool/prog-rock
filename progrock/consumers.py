@@ -48,7 +48,9 @@ def worker(msg):
 
     if cmd == 'start':
         # start a long running background task!
+        # (this is just a mockup, using number to represent the progress of a background task)
         progress = 0
+
         send_progress(reply, progress)
 
         new_msg = delayed_message(reply, progress)
@@ -56,11 +58,11 @@ def worker(msg):
 
     elif cmd == 'continue':
         # check in on the background task
+        # (we are simulating a task by incrementing a number)
         progress = msg.content['progress'] + 3
         if progress >= 100:
             send_to_ws(reply, {'complete': True, 'progress': 100})
         else:
-            command = 'continue'
             send_progress(reply, progress)
-            new_msg = delayed_message(reply, progress, command)
+            new_msg = delayed_message(reply, progress, 'continue')
             delayed_send(new_msg)
