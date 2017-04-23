@@ -58,15 +58,9 @@ def worker(msg):
         # check in on the background task
         progress = msg.content['progress'] + 3
         if progress >= 100:
-            progress = 100
-            command = 'complete'
+            send_to_ws(reply, {'complete': True, 'progress': 100})
         else:
             command = 'continue'
-
-        send_progress(reply, progress)
-
-        new_msg = delayed_message(reply, progress, command)
-        delayed_send(new_msg)
-
-    elif cmd == 'complete':
-        send_to_ws(reply, {'complete': True})
+            send_progress(reply, progress)
+            new_msg = delayed_message(reply, progress, command)
+            delayed_send(new_msg)
