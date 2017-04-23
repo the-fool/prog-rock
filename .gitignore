@@ -43,3 +43,4 @@ celerybeat-schedule.db
 .coverage
 .tox
 .cache
+db.sqlite3*

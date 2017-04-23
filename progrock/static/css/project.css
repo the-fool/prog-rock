@@ -1,3 +1,7 @@
 body {
   background: #fafafa;
 }
+
+#prog-val.complete {
+  color: green;
+}
