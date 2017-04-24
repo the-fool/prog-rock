@@ -1,15 +1,12 @@
 from channels import Channel
-from channels.sessions import channel_session
 
 import json
 
 
-@channel_session
 def ws_connect(msg):
     msg.reply_channel.send({'text': json.dumps({"accept": True})})
 
 
-@channel_session
 def ws_receive(message):
     print(message)
     data = json.loads(message['text'])
