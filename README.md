@@ -10,6 +10,7 @@ Once you have Docker going, then simply do the following:
 
 ```bash
 docker-compose build
+docker-compose run django python manage.py migrate
 docker-compose up
 ```
 
