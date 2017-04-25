@@ -14,17 +14,17 @@ def ws_receive(message):
     if data['action'] == 'start':
         Channel('prog-rocker').send({
             'reply_channel': reply_channel,
-            'command': 'start',
+            'action': 'start',
         })
 
 
 def worker(msg):
-    def delayed_message(reply_channel, progress, command='continue'):
+    def delayed_message(reply_channel, progress, action):
         return {
             'channel': 'prog-rocker',
             'content': {
                 'reply_channel': reply_channel,
-                'command': command,
+                'action': action,
                 'progress': progress,
             },
             'delay': 200
@@ -39,20 +39,20 @@ def worker(msg):
     def send_progress(reply_channel, progress):
         send_to_ws(reply_channel, {'progress': progress})
 
-    cmd = msg.content['command']
+    action = msg.content['action']
     reply = msg.content['reply_channel']
 
-    if cmd == 'start':
+    if action == 'start':
         # start a long running background task!
         # (this is just a mockup, using number to represent the progress of a background task)
         progress = 0
 
         send_progress(reply, progress)
 
-        new_msg = delayed_message(reply, progress)
+        new_msg = delayed_message(reply, progress, 'continue')
         delayed_send(new_msg)
 
-    elif cmd == 'continue':
+    elif action == 'continue':
         # check in on the background task
         # (we are simulating a task by incrementing a number)
         progress = msg.content['progress'] + 3
