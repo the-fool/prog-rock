@@ -1,5 +1,7 @@
 # Prog-Rock
 
+This code is paired with a blog post: http://www.thomasruble.com/blog/real-time-progress-updates-with-django-channels/
+
 Simple example Django app using `channels` and `channels.delay` to deliver real-time progress updates over WebSockets.
 
 ## Execute
